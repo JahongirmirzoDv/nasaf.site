@@ -47,7 +47,16 @@ const formStatusMessage = document.getElementById('formStatusMessage');
 if (contactForm && formStatusMessage) {
     contactForm.addEventListener('submit', function(event) {
         event.preventDefault(); // Haqiqiy HTML forma yuborishni to'xtatish
-
+        
+        console.log('Form submission started');
+        // Debug form data
+        const formData = new FormData(contactForm);
+        const formValues = {};
+        for (let [key, value] of formData.entries()) {
+            formValues[key] = value;
+        }
+        console.log('Form data:', formValues);
+        
         let isValid = true;
         const requiredFields = contactForm.querySelectorAll('[required]');
         requiredFields.forEach(field => {
@@ -81,13 +90,21 @@ if (contactForm && formStatusMessage) {
         // Hozirgi HTML formamizdagi 'name' atributlari shunga mos:
         // fullName, email, phone, subject, message
 
-        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this) // 'this' forma elementiga ishora qiladi
-            .then(() => {
+        console.log('Submitting form with EmailJS:', { SERVICE_ID, TEMPLATE_ID, form: contactForm });
+        
+        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, contactForm) // Using contactForm instead of 'this'
+            .then((response) => {
+                console.log('EmailJS success:', response);
                 formStatusMessage.textContent = translations[currentLang]?.form_message_success || 'Xabaringiz muvaffaqiyatli yuborildi!';
                 formStatusMessage.className = 'form-status-message success';
                 contactForm.reset(); // Formani tozalash
             }, (error) => {
-                console.error('EmailJS xatoligi:', error);
+                console.error('EmailJS xatoligi (details):', { 
+                    message: error.message,
+                    text: error.text,
+                    status: error.status,
+                    name: error.name
+                });
                 formStatusMessage.textContent = translations[currentLang]?.form_message_error_server_emailjs || 'Xabar yuborishda xatolik yuz berdi. Xizmat sozlamalarini tekshiring.';
                 formStatusMessage.className = 'form-status-message error';
             })
