@@ -1,38 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Joriy yilni footer'ga qo'yish
-    const yearSpan = document.getElementById('currentYear');
-    if (yearSpan && !yearSpan.textContent) {
-        yearSpan.textContent = new Date().getFullYear();
-    }
+    // ... (your existing code)
 
-    // Navigatsiyadagi aktiv sahifani belgilash
-    const currentPage = window.location.pathname.split("/").pop() || "index.html";
-    document.querySelectorAll('header nav ul li a').forEach(link => {
-        if (link.getAttribute('href') === currentPage) {
-            link.classList.add('active');
-        } else {
-            link.classList.remove('active');
-        }
-    });
+    // Lightbox for Projects
+    const projectImages = document.querySelectorAll('.project-image-clickable');
+    if (projectImages.length > 0) {
+        const lightbox = document.createElement('div');
+        lightbox.id = 'projectLightbox';
+        lightbox.className = 'lightbox';
+        
+        const lightboxImage = document.createElement('img');
+        lightboxImage.className = 'lightbox-content';
+        lightbox.appendChild(lightboxImage);
 
-    // Mobil menyu ochish/yopish
-    const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const nav = document.querySelector('header nav');
+        const closeBtn = document.createElement('span');
+        closeBtn.className = 'lightbox-close';
+        closeBtn.innerHTML = '&times;';
+        lightbox.appendChild(closeBtn);
 
-    if (menuToggle && nav) {
-        menuToggle.addEventListener('click', () => {
-            nav.classList.toggle('active'); // 'active' klassini qo'shish/olib tashlash
-            const isExpanded = nav.classList.contains('active');
-            menuToggle.setAttribute('aria-expanded', isExpanded);
-            if(isExpanded) {
-                menuToggle.setAttribute('aria-label', "Menyuni yopish");
-            } else {
-                menuToggle.setAttribute('aria-label', "Menyuni ochish");
+        document.body.appendChild(lightbox);
+
+        projectImages.forEach(image => {
+            image.addEventListener('click', function() {
+                const largeSrc = this.dataset.largeSrc || this.src;
+                lightbox.style.display = 'flex'; // Show lightbox
+                lightboxImage.src = largeSrc;
+                lightboxImage.alt = this.alt; // Set alt from the clicked image
+                document.body.style.overflow = 'hidden'; // Prevent background scroll
+            });
+        });
+
+        closeBtn.addEventListener('click', () => {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        lightbox.addEventListener('click', (e) => { // Close on clicking background
+            if (e.target === lightbox) {
+                lightbox.style.display = 'none';
+                document.body.style.overflow = 'auto';
             }
         });
     }
-
-    // Boshqa umumiy JavaScript kodlari shu yerga yoziladi
 });
 
 

@@ -91,6 +91,75 @@ header nav ul li a:hover {
     color: #29B6F6; /* Ochiq ko'k */
 }
 
+/* Example for buttons */
+.cta-button:focus,
+.lang-btn:focus {
+    outline: 2px solid #039BE5; /* Or your preferred focus color */
+    outline-offset: 2px;
+}
+
+header nav ul li a:focus {
+    color: #29B6F6;
+    text-decoration: underline; /* Consistent with hover */
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    border-color: #29B6F6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(41, 182, 246, 0.3); /* Softer focus ring */
+}
+
+/* Add to body or a main wrapper */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex-grow: 1; /* Allows main content to take up available space */
+}
+
+.lightbox {
+    display: none; /* Hidden by default */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 85%;
+    max-height: 85%;
+    border-radius: 5px;
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+    color: #bbb;
+    text-decoration: none;
+}
+
 .language-switcher .lang-btn { /* .language-switcher button o'rniga */
     background: transparent;
     color: #333333;
@@ -959,4 +1028,51 @@ footer p {
     .contact-form-info .section-title::after {
         margin-left: auto;
     }
+}
+
+#testimonials .section-title {
+    margin-bottom: 50px;
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-left: 5px solid #29B6F6; /* Accent color */
+    border-radius: 8px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.testimonial-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    font-style: italic;
+    position: relative;
+    padding-left: 30px; /* Space for quote icon */
+}
+
+.testimonial-text::before {
+    content: '“'; /* Opening quote */
+    font-family: Georgia, serif;
+    font-size: 40px;
+    color: #29B6F6;
+    position: absolute;
+    left: 0px;
+    top: -5px;
+}
+
+
+.testimonial-author {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1A237E;
+    text-align: right;
 }

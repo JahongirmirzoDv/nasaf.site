@@ -177,5 +177,12 @@
     "form_message_error_server_contact": "Xabar yuborishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring yoki biz bilan telefon orqali bog'laning.",
     "form_message_error_server_emailjs": "Xabar yuborishda xatolik yuz berdi. EmailJS xizmati sozlamalarini tekshiring yoki keyinroq qayta urinib ko'ring.",
 
+    "testimonials_title": "Mijozlarimiz Fikrlari",
+    "testimonial_1_text": "\"Nasaf Elektromontaj bizning zavodimiz uchun elektr ta'minoti loyihasini o'z vaqtida va yuqori sifatda bajardi. Professional jamoa!\"",
+    "testimonial_1_author": "- A. Ivanov, \"Metallurgiya\" Zavodi Direktori",
+    "testimonial_2_text": "\"Podstansiyamizni modernizatsiya qilishda ko'rsatgan yordamlari uchun rahmat. Ishonchli hamkor.\"",
+    "testimonial_2_author": "- B. Qosimov, Shahar Elektr Tarmoqlari Bosh Muhandisi",
+    
+
     "footer_copyright": "&copy; {currentYear} Nasaf Elektromontaj. Barcha huquqlar himoyalangan."
 }
