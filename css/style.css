@@ -48,7 +48,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Header */
 header {
     background: #FFFFFF;
-    padding: 15px 0; /* Ozroq padding */
+    padding: 10px 0; /* Slightly reduced padding to account for larger logo */
     border-bottom: 1px solid #e0e0e0; /* Nozikroq chiziq */
     position: sticky; /* Yuqoriga yopishib qolishi uchun */
     top: 0;
@@ -63,7 +63,16 @@ header .container {
 }
 
 header .logo img {
-    height: 50px;
+    height: 90px; /* Increased from 60px to 90px to make the logo bigger */
+    max-width: 100%; /* Ensure the logo scales properly */
+    transition: height 0.3s ease; /* Smooth transition when resizing */
+}
+
+/* Make logo smaller on mobile screens */
+@media (max-width: 768px) {
+    header .logo img {
+        height: 70px; /* Slightly smaller on mobile but still bigger than original */
+    }
 }
 
 header nav ul {
@@ -1075,4 +1084,86 @@ footer p {
     font-weight: 500;
     color: #1A237E;
     text-align: right;
+}
+
+/* PDF Certificates Styling */
+.certificates-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.certificate-card {
+    display: flex;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.certificate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+}
+
+.pdf-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f9f9f9;
+    padding: 20px;
+    min-width: 100px;
+}
+
+.pdf-icon-image {
+    width: 50px;
+    height: auto;
+}
+
+.certificate-info {
+    padding: 20px;
+    flex-grow: 1;
+}
+
+.certificate-info h4 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #1A237E;
+    font-size: 18px;
+}
+
+.certificate-desc {
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.download-link {
+    display: inline-block;
+    color: #29B6F6;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border: 1px solid #29B6F6;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.download-link:hover {
+    background-color: #29B6F6;
+    color: white;
+}
+
+/* Responsive styles for certificates */
+@media (max-width: 768px) {
+    .certificate-card {
+        flex-direction: column;
+    }
+    
+    .pdf-icon {
+        padding: 15px;
+        width: 100%;
+    }
 }
