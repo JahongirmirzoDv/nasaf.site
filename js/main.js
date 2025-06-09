@@ -1,125 +1,152 @@
+// Utility function to initialize all scripts on DOMContentLoaded
 document.addEventListener('DOMContentLoaded', () => {
-    // ... (your existing code)
-
-    // Lightbox for Projects
-    const projectImages = document.querySelectorAll('.project-image-clickable');
-    if (projectImages.length > 0) {
-        const lightbox = document.createElement('div');
-        lightbox.id = 'projectLightbox';
-        lightbox.className = 'lightbox';
-        
-        const lightboxImage = document.createElement('img');
-        lightboxImage.className = 'lightbox-content';
-        lightbox.appendChild(lightboxImage);
-
-        const closeBtn = document.createElement('span');
-        closeBtn.className = 'lightbox-close';
-        closeBtn.innerHTML = '&times;';
-        lightbox.appendChild(closeBtn);
-
-        document.body.appendChild(lightbox);
-
-        projectImages.forEach(image => {
-            image.addEventListener('click', function() {
-                const largeSrc = this.dataset.largeSrc || this.src;
-                lightbox.style.display = 'flex'; // Show lightbox
-                lightboxImage.src = largeSrc;
-                lightboxImage.alt = this.alt; // Set alt from the clicked image
-                document.body.style.overflow = 'hidden'; // Prevent background scroll
-            });
-        });
-
-        closeBtn.addEventListener('click', () => {
-            lightbox.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
-
-        lightbox.addEventListener('click', (e) => { // Close on clicking background
-            if (e.target === lightbox) {
-                lightbox.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
-    }
+    initCurrentYear();
+    initMobileMenu();
+    initLightbox();
+    initContactForm();
 });
 
+/**
+ * Sets the current year in the footer.
+ */
+function initCurrentYear() {
+    const yearSpan = document.getElementById('currentYear');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+}
 
-// main.js faylining oxiriga qo'shing
+/**
+ * Initializes the mobile menu toggle functionality.
+ */
+function initMobileMenu() {
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const nav = document.querySelector('header nav');
 
-// Contact Form Submission (Placeholder)
-// main.js faylidagi mavjud contactForm qismini TO'LIQ O'ZGARTIRING
-
-const contactForm = document.getElementById('mainContactForm');
-const formStatusMessage = document.getElementById('formStatusMessage');
-
-if (contactForm && formStatusMessage) {
-    contactForm.addEventListener('submit', function(event) {
-        event.preventDefault(); // Haqiqiy HTML forma yuborishni to'xtatish
-        
-        console.log('Form submission started');
-        // Debug form data
-        const formData = new FormData(contactForm);
-        const formValues = {};
-        for (let [key, value] of formData.entries()) {
-            formValues[key] = value;
-        }
-        console.log('Form data:', formValues);
-        
-        let isValid = true;
-        const requiredFields = contactForm.querySelectorAll('[required]');
-        requiredFields.forEach(field => {
-            if (!field.value.trim()) {
-                isValid = false;
-                field.style.borderColor = '#dc3545'; // Xatolik rangi
-            } else {
-                field.style.borderColor = '#ddd'; // Asl holiga qaytarish
-            }
+    if (menuToggle && nav) {
+        menuToggle.addEventListener('click', () => {
+            const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+            nav.classList.toggle('active');
+            menuToggle.setAttribute('aria-expanded', !isExpanded);
         });
+    }
+}
 
-        if (!isValid) {
-            formStatusMessage.textContent = translations[currentLang]?.form_message_error_fill || 'Iltimos, barcha kerakli maydonlarni to\'ldiring.';
+/**
+ * Initializes the lightbox functionality for project images.
+ */
+function initLightbox() {
+    const imageLinks = document.querySelectorAll('.project-showcase-image .zoom-icon');
+    if (imageLinks.length === 0) return;
+
+    // Create lightbox elements once
+    const lightbox = document.createElement('div');
+    lightbox.id = 'projectLightbox';
+    lightbox.className = 'lightbox';
+    
+    const lightboxImage = document.createElement('img');
+    lightboxImage.className = 'lightbox-content';
+    lightbox.appendChild(lightboxImage);
+
+    const closeBtn = document.createElement('span');
+    closeBtn.className = 'lightbox-close';
+    closeBtn.innerHTML = '&times;';
+    lightbox.appendChild(closeBtn);
+
+    document.body.appendChild(lightbox);
+
+    // Function to open the lightbox
+    const openLightbox = (e) => {
+        e.preventDefault();
+        const largeSrc = e.currentTarget.href;
+        const imageAlt = e.currentTarget.closest('.project-showcase-card').querySelector('img').alt;
+        
+        lightbox.style.display = 'flex';
+        lightboxImage.src = largeSrc;
+        lightboxImage.alt = imageAlt;
+        document.body.style.overflow = 'hidden';
+    };
+
+    // Function to close the lightbox
+    const closeLightbox = () => {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    };
+
+    // Attach event listeners
+    imageLinks.forEach(link => link.addEventListener('click', openLightbox));
+    closeBtn.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+}
+
+
+/**
+ * Initializes the contact form to submit data to the Firebase Cloud Function.
+ */
+function initContactForm() {
+    const contactForm = document.getElementById('mainContactForm');
+    if (!contactForm) return;
+
+    const formStatusMessage = document.getElementById('formStatusMessage');
+
+    contactForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // NOTE: Replace with your actual Firebase project ID and region
+        const CLOUD_FUNCTION_URL = 'https://<REGION>-<PROJECT_ID>.cloudfunctions.net/sendContactEmailWithResend';
+
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const formData = new FormData(contactForm);
+        const formValues = Object.fromEntries(formData.entries());
+        
+        // Basic validation
+        if (!formValues.fullName || !formValues.email || !formValues.subject || !formValues.message) {
+            formStatusMessage.textContent = 'Iltimos, barcha kerakli maydonlarni to\'ldiring.';
             formStatusMessage.className = 'form-status-message error';
-            setTimeout(() => { formStatusMessage.textContent = ''; formStatusMessage.className = 'form-status-message'; }, 5000);
             return;
         }
 
-        const submitButton = contactForm.querySelector('button[type="submit"]');
+        // Disable button and show sending message
         submitButton.disabled = true;
         submitButton.style.opacity = '0.7';
-        formStatusMessage.textContent = translations[currentLang]?.form_message_sending || 'Yuborilmoqda...';
+        formStatusMessage.textContent = 'Yuborilmoqda...';
         formStatusMessage.className = 'form-status-message';
 
-        // EmailJS settings
-        const SERVICE_ID = "service_2rd7x3g";    
-        const TEMPLATE_ID = "template_bjsr8ew";  
-
-        // Forma maydonlarining 'name' atributlari EmailJS shablonidagi o'zgaruvchilarga mos kelishi kerak.
-        // Masalan, <input type="text" name="fullName"> shablonda {{fullName}} ga mos keladi.
-        // Hozirgi HTML formamizdagi 'name' atributlari shunga mos:
-        // fullName, email, phone, subject, message
-
-        console.log('Submitting form with EmailJS:', { SERVICE_ID, TEMPLATE_ID, form: contactForm });
-        
-        emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, contactForm) // Using contactForm instead of 'this'
-            .then((response) => {
-                console.log('EmailJS success:', response);
-                formStatusMessage.textContent = translations[currentLang]?.form_message_success || 'Xabaringiz muvaffaqiyatli yuborildi!';
-                formStatusMessage.className = 'form-status-message success';
-                contactForm.reset(); // Formani tozalash
-            }, (error) => {
-                console.error('EmailJS xatoligi (details):', { 
-                    message: error.message,
-                    text: error.text,
-                    status: error.status,
-                    name: error.name
-                });
-                formStatusMessage.textContent = translations[currentLang]?.form_message_error_server_emailjs || 'Xabar yuborishda xatolik yuz berdi. Xizmat sozlamalarini tekshiring.';
-                formStatusMessage.className = 'form-status-message error';
-            })
-            .finally(() => {
-                submitButton.disabled = false;
-                submitButton.style.opacity = '1';
-                setTimeout(() => { formStatusMessage.textContent = ''; formStatusMessage.className = 'form-status-message'; }, 7000);
+        try {
+            const response = await fetch(CLOUD_FUNCTION_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formValues),
             });
+
+            const result = await response.json();
+
+            if (response.ok && result.success) {
+                formStatusMessage.textContent = result.message || 'Xabaringiz muvaffaqiyatli yuborildi!';
+                formStatusMessage.className = 'form-status-message success';
+                contactForm.reset();
+            } else {
+                throw new Error(result.message || 'Serverda xatolik yuz berdi.');
+            }
+
+        } catch (error) {
+            console.error('Form submission error:', error);
+            formStatusMessage.textContent = error.message || 'Xabar yuborishda kutilmagan xatolik.';
+            formStatusMessage.className = 'form-status-message error';
+        } finally {
+            submitButton.disabled = false;
+            submitButton.style.opacity = '1';
+            // Clear message after a few seconds
+            setTimeout(() => {
+                formStatusMessage.textContent = '';
+                formStatusMessage.className = 'form-status-message';
+            }, 7000);
+        }
     });
 }
