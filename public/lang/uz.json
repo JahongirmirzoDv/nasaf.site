@@ -65,8 +65,13 @@
     "team_member_3_role": "Loyiha Menejeri",
     "about_licenses_title": "Litsenziyalar va Sertifikatlar",
     "about_licenses_subtitle": "Faoliyatimiz qonuniyligi va xizmatlarimiz sifati xalqaro standartlarga mos kelishini tasdiqlovchi hujjatlar.",
-    "license_1_name": "Faoliyat uchun Davlat Litsenziyasi",
-    "cert_1_name": "ISO 9001:2015 Sifat Menejmenti Sertifikati",
+    "view_certificate": "Sertifikatni ko'rish",
+    "cert_1_name": "Faoliyat uchun Davlat Litsenziyasi",
+    "cert_1_desc": "Elektromontaj ishlarini amalga oshirish uchun davlat tomonidan berilgan rasmiy litsenziya",
+    "cert_2_name": "ISO 9001:2015 Sifat Menejmenti Sertifikati",
+    "cert_2_desc": "Xalqaro standartlarga muvofiq sifat boshqaruvi tizimini tasdiqlash",
+    "cert_3_name": "Texnik Vakolatlar Sertifikati",
+    "cert_3_desc": "Murakkab texnik ishlarni bajarish uchun maxsus sertifikat",
 
     "services_page_main_title": "Bizning Xizmatlarimiz",
     "services_page_subtitle": "Energetika sohasidagi ehtiyojlaringiz uchun kompleks yechimlar.",
@@ -169,6 +174,8 @@
 
     "form_message_success": "Xabaringiz muvaffaqiyatli yuborildi! Tez orada javob beramiz.",
     "form_message_error": "Iltimos, barcha kerakli maydonlarni to'ldiring.",
+    "form_message_error_fill": "Iltimos, barcha kerakli maydonlarni to'ldiring.",
+    "form_message_sending": "Yuborilmoqda...",
 
     "form_message_error_server": "Xabar yuborishda xatolik yuz berdi. Iltimos, keyinroq qayta urinib ko'ring.",
     "form_message_error_invalid_email": "Iltimos, to'g'ri elektron pochta manzilini kiriting.",

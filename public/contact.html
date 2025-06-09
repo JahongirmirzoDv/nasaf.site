@@ -9,14 +9,16 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Roboto:wght@400;500&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- EmailJS SDK (Updated to latest version) -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
 </head>
 
 <body>
     <header>
         <div class="container">
             <div class="logo">
-                <a href="index.html"><img src="../assets/images/nasaf_no_bg.png" alt="Nasaf Elektromontaj Logotipi"></a>
+                <a href="index.html"><img src="assets/images/nasaf_no_bg.png" alt="Nasaf Elektromontaj Logotipi"></a>
             </div>
             <nav>
                 <ul>
@@ -53,25 +55,25 @@
             <div class="container">
                 <div class="contact-info-grid">
                     <div class="contact-info-item">
-                        <img src="../assets/images/location.svg" alt="Manzil ikonkasi" class="contact-info-icon">
+                        <img src="assets/images/location.svg" alt="Manzil ikonkasi" class="contact-info-icon">
                         <h3 data-lang="contact_address_title">Bizning Manzilimiz</h3>
                         <p data-lang="contact_address_detail">O'zbekiston, Qarshi shahri, O'zbekiston OVOZI, 35 uy</p>
                         <p data-lang="contact_address_landmark">(Mo'ljal: Qarshi shahar hokimligi)</p>
                     </div>
                     <div class="contact-info-item">
-                        <img src="../assets/images/icon_phone.png" alt="Telefon ikonkasi" class="contact-info-icon">
+                        <img src="assets/images/icon_phone.png" alt="Telefon ikonkasi" class="contact-info-icon">
                         <h3 data-lang="contact_phone_title">Telefon Raqamlarimiz</h3>
                         <p><a href="tel:+998901234567" data-lang="contact_phone_1">+998 (90) 123-45-67</a> (Ofis)</p>
                         <p><a href="tel:+998911234567" data-lang="contact_phone_2">+998 (91) 123-45-67</a> (Savdo bo'limi)</p>
                     </div>
                     <div class="contact-info-item">
-                        <img src="../assets/images/email.svg" alt="Email ikonkasi" class="contact-info-icon">
+                        <img src="assets/images/email.svg" alt="Email ikonkasi" class="contact-info-icon">
                         <h3 data-lang="contact_email_title">Elektron Pochta</h3>
                         <p><a href="mailto:info@nasaf.com.uz" data-lang="contact_email_info">info@nasaf.com.uz</a></p>
                         <p><a href="mailto:sales@nasaf.com.uz" data-lang="contact_email_sales">sales@nasaf.com.uz</a></p>
                     </div>
                     <div class="contact-info-item">
-                        <img src="../assets/images/clock.svg" alt="Ish vaqti ikonkasi" class="contact-info-icon">
+                        <img src="assets/images/clock.svg" alt="Ish vaqti ikonkasi" class="contact-info-icon">
                         <h3 data-lang="contact_working_hours_title">Ish Vaqtimiz</h3>
                         <p data-lang="contact_working_hours_days">Dushanba - Shanba:</p>
                         <p data-lang="contact_working_hours_time">9:00 - 18:00</p>
@@ -87,7 +89,7 @@
                     <div class="contact-form-info">
                         <h2 class="section-title" data-lang="contact_form_title">Xabar Yuborish</h2>
                         <p data-lang="contact_form_intro">Quyidagi forma orqali bizga o'z savollaringizni yoki takliflaringizni yuborishingiz mumkin. Tez orada siz bilan bog'lanamiz.</p>
-                        <img src="../assets/images/contact_form_illustration.png" alt="Aloqa formasi illustratsiyasi" class="contact-form-illustration">
+                        <img src="assets/images/contact_form_illustration.png" alt="Aloqa formasi illustratsiyasi" class="contact-form-illustration">
                     </div>
                     <form id="mainContactForm" class="contact-form">
                         <div class="form-group">
@@ -119,7 +121,7 @@
 
         <section id="map-section">
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3093.***!2d65.79***!3d38.8***!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f4ea***!2z0KPQtNCw0LvRjNC90LDRjyDRg9C90LjQstC10L3QvdGL0Lkg0YTQtdC90Ysh!5e0!3m2!1sen!2s!4v16243***"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1372.2544182418749!2d65.79448941254918!3d38.83382030600225!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f4ea89aebd12931%3A0xa7041933ddb96ee5!2sQarshi%20shahar%20hokimligi!5e0!3m2!1sen!2s!4v1749467561350!5m2!1sen!2s"
                 width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade" title="Bizning manzilimiz xaritada">
             </iframe>
@@ -132,8 +134,20 @@
         </div>
     </footer>
 
-    <script src="../js/i18n.js"></script>
-    <script src="../js/main.js"></script>
+    <!-- First load i18n, then EmailJS initialization, then main.js -->
+    <script src="js/i18n.js"></script>
+    <script>
+        // Initialize EmailJS here to ensure it's ready before main.js tries to use it
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init("aTMkW0Lc96Ee8VEfq");
+                console.log("EmailJS initialized successfully");
+            } else {
+                console.error("EmailJS library not loaded properly");
+            }
+        });
+    </script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
